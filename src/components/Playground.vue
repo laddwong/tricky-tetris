@@ -163,11 +163,11 @@
     mounted () {
       let that = this
       document.onkeydown = function (e) {
+        if (e.code === 'Space') {
+          that.rotate()
+          return;
+        }
         if (e.key.indexOf('Arrow') !== -1) {
-          if (e.key === 'ArrowUp') {
-            that.rotate()
-            return;
-          }
           if (e.key === 'ArrowDown') {
             that.fall()
             return;
@@ -184,23 +184,25 @@
 <style scoped>
   .playground-container {
     background-color: #000;
-    height: 700px;
-    width: 480px;
+    margin: auto;
+    height: 664px;
+    width: 400px;
+    border: 5px solid #E6E6E6;
   }
   table {
     border-collapse: collapse;
-
+    width: 100%;
+    height: 100%;
   }
   td {
-    border: 1px solid #FFF;
+    border: 1px solid #303133;
   }
   .default {
     display: block;
-    height: 30px;
-    width: 30px;
     background-color: black;
+    height: 100%;
   }
   .active {
-    background-color: white;
+    background-color: #049CD8;
   }
 </style>
