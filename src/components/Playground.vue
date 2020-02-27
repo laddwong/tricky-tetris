@@ -4,7 +4,7 @@
       <tbody>
         <tr v-for="(row, index) in displayBoard" :key="index + 'row'">
           <td v-for="(cell, cellIndex) in row" :key="cellIndex + 'cell'">
-            <span :class="{active: cell, default: true}"></span>
+            <div :class="{active: cell, default: true}"></div>
           </td>
         </tr>
       </tbody>
@@ -168,6 +168,10 @@
           return;
         }
         if (e.key.indexOf('Arrow') !== -1) {
+          if (e.key === 'ArrowUp') {
+            that.rotate()
+            return;
+          }
           if (e.key === 'ArrowDown') {
             that.fall()
             return;
@@ -184,9 +188,9 @@
 <style scoped>
   .playground-container {
     background-color: #000;
-    margin: auto;
-    height: 664px;
-    width: 400px;
+    height: 500px;
+    width: 300px;
+    flex-shrink: 0;
     border: 5px solid #E6E6E6;
   }
   table {
@@ -195,7 +199,7 @@
     height: 100%;
   }
   td {
-    border: 1px solid #303133;
+    border: 1px inset #303133;
   }
   .default {
     display: block;

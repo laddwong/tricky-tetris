@@ -6,20 +6,27 @@
 		<div class="title">
 			<h1>—— Vue Tetris ——</h1>
 		</div>
-		<Playground @landing="nextBrick" :newBrickType="newBrickType"/>
-		<GameInfo v-if="false"/>
+		<div class="play-and-info-container">
+			<Playground @landing="nextBrick" :newBrickType="newBrickType"/>
+			<GameInfo/>
+		</div>
+		<div class="controler-container">
+			<Controler/>
+		</div>
 	</div>
 </template>
 
 <script>
 	import Playground from './Playground'
 	import GameInfo from './GameInfo'
+	import Controler from './Controler'
 	import { randomType } from '../util/index.js' 
 	export default {
 		name: 'Game',
 		components: {
 			Playground,
-			GameInfo
+			GameInfo,
+			Controler
 		},
 		data () {
 			return {
@@ -44,8 +51,8 @@
 		background-color: #E52521;
 		position: relative;
 		width: 500px;
-		height: 100%;
 		margin: auto;
+		border-radius: 20px;
 	}
 	.title h1 {
 		line-height: 50px;
@@ -56,9 +63,9 @@
 	}
 	.banner {
 		position: absolute;
-		top: 40%;
-		left: 0;
-		right: 0;
+		top: 274px;
+		left: 30px;
+		right: 150px;
 		text-align: center;
 	}
 	.banner button {
@@ -71,8 +78,17 @@
 		font-style: oblique;
 		cursor: pointer;
 	}
-	.banner button:hover {
-		text-stroke-width: 5px;
-		text-stroke-color: #FBD000;
+	.play-and-info-container {
+		padding: 0px 30px;
+		display: flex;
+		overflow: hidden;
+	}
+	.controler-container {
+		background-color: #DBC789;
+		height: 200px;
+		margin: 0px 30px;
+		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+		border-top-left-radius: 20px;
 	}
 </style>
