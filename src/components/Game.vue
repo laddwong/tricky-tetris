@@ -7,11 +7,11 @@
 			<h1>—— Vue Tetris ——</h1>
 		</div>
 		<div class="play-and-info-container">
-			<Playground @landing="nextBrick" :newBrickType="newBrickType"/>
+			<Playground ref="playground" @landing="nextBrick" :newBrickType="newBrickType"/>
 			<GameInfo/>
 		</div>
 		<div class="controler-container">
-			<Controler/>
+			<Controler @rotate="$refs.playground.rotate()" @fall="$refs.playground.fall()" @move="move" />
 		</div>
 	</div>
 </template>
@@ -41,6 +41,9 @@
 			startGame () {
 				this.ifBanner = false
 				this.newBrickType = randomType()
+			},
+			move (direction) {
+				this.$refs.playground.move(direction)
 			}
 		}
 	}
@@ -51,6 +54,7 @@
 		background-color: #E52521;
 		position: relative;
 		width: 500px;
+		padding-bottom: 20px;
 		margin: auto;
 		border-radius: 20px;
 	}
@@ -87,6 +91,7 @@
 		background-color: #DBC789;
 		height: 200px;
 		margin: 0px 30px;
+		padding-bottom: 10px;
 		border-bottom-left-radius: 20px;
 		border-bottom-right-radius: 20px;
 		border-top-left-radius: 20px;

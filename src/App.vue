@@ -22,17 +22,15 @@ export default {
     }
   },
   mounted () {
-    let width = document.documentElement.clientWidth
-    let height = document.documentElement.clientHeight
-    let scale = 1
-    if (width < 500 || height < 780) {
-      scale = width / 500
-      if (height < 780 * scale) {
-        scale = height / 780
+    if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+      let width = document.documentElement.clientWidth
+      let height = document.documentElement.clientHeight
+      let scale = width / 500
+      if (height < 810 * scale) {
+        this.scale = height / (scale * 810)
+        this.marginTop = 810 * scale -height
+        this.marginLeft = width * (1 - this.scale)
       }
-      this.scale = scale
-      this.marginTop = 780 - 780 * scale
-      this.marginLeft = 500 - 500 * scale
     }
   }
 }
