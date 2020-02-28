@@ -1,24 +1,7 @@
-# tricky-tetris
+# tricky-tetris 俄罗斯方块
 
-## Project setup
-```
-npm install
-```
+## 俄罗斯方块
+Vue实现的俄罗斯方块
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 体验地址
+- [点这里](https://laddwong.github.io/tricky-tetris/dist/index.html)
