@@ -13,21 +13,27 @@
 </template>
 
 <script>
-  import { deepCopy, getMatrix } from '../util/index.js'
+  import { deepCopy, getMatrix, randomType } from '../util/index.js'
   import { SIZE_OF_BOARD } from '../util/sizeOfBoard.js'
   import { Tetriminos } from '../util/Tetriminos.js'
   export default {
     name: 'playground',
-    props: ['newBrickType'],
+    props: ['gameSpeed'],
     data() {
       return {
         board: getMatrix({col: SIZE_OF_BOARD.col, row: SIZE_OF_BOARD.row}),
         newBrick: {},
-        gameSpeed: 1000,
         intervalObj: -1
       }
     },
     methods: {
+      /*创建一个新砖块并下落*/
+      createBrick () {
+        this.newBrick = new Tetriminos({row: 1, col: 4}, randomType())
+        this.intervalObj = setInterval(() => {
+          this.fall()
+        }, this.gameSpeed)
+      },
       /*左右平移*/
       move (e) {
         let direction = e === 'ArrowLeft' ? -1 : 1
@@ -51,9 +57,9 @@
           // 合规则进行移动
           this.newBrick.brick = moveTo
         } else {
-          // 不合规触发着陆
-          this.landing()
+          // 不合规触发着陆并停止下落
           clearInterval(this.intervalObj)
+          this.landing()
         }
       },
       /*旋转*/
@@ -133,7 +139,16 @@
             this.board.unshift(new Array(SIZE_OF_BOARD.col).fill(0))
           }
         })
-        this.$emit('landing', count)
+        // 判断game over
+        if (this.board[0].indexOf(1) === -1) {
+          this.$emit('landing', count)
+        } else {
+          this.$emit('gameOver')
+        }
+      },
+      /*重新开始*/
+      restart () {
+        this.board = getMatrix({row: SIZE_OF_BOARD.row, col: SIZE_OF_BOARD.col})
       }
     },
     computed: {
@@ -146,17 +161,6 @@
           })
         }
         return displayArr
-      }
-    },
-    watch: {
-      // 监视父组件的传入
-      newBrickType () {
-        if (this.newBrickType) {
-          this.newBrick = new Tetriminos({row: 1, col: 4}, this.newBrickType)
-          this.intervalObj = setInterval(() => {
-            this.fall()
-          }, this.gameSpeed)
-        }
       }
     },
     /* 全局监听键盘事件，判断方向键触发相应函数 */

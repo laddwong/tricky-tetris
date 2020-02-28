@@ -33,3 +33,10 @@ import { TETRIMINOS_TYPE } from './Tetriminos.js'
 export function randomType () {
 	return TETRIMINOS_TYPE[Math.floor(Math.random() * TETRIMINOS_TYPE.length)]
 }
+
+/* 判断是否属于移动端
+ * @return {Boolean}
+ */
+ export function isMobile () {
+  return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+ }

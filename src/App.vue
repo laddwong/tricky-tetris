@@ -8,6 +8,7 @@
 
 <script>
 import Game from './components/Game.vue'
+import {isMobile} from './util/index.js'
 
 export default {
   name: 'App',
@@ -22,7 +23,7 @@ export default {
     }
   },
   mounted () {
-    if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+    if (isMobile()) {
       let width = document.documentElement.clientWidth
       let height = document.documentElement.clientHeight
       let scale = width / 500
@@ -31,12 +32,20 @@ export default {
         this.marginTop = 810 * scale -height
         this.marginLeft = width * (1 - this.scale)
       }
+      document.documentElement.addEventListener('touchend', function (e) {
+        e.preventDefault()
+        e.target.click()
+      })
     }
   }
 }
 </script>
 
 <style>
+* {
+  touch-action: manipulation;
+  user-select: none;
+}
 body{
   margin: 0px;
   background-color: #F9F3E7;

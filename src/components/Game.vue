@@ -1,14 +1,14 @@
 <template>
 	<div class="game-container">
-		<div class="banner" v-if="ifBanner">
-			<button @click.once="startGame">Click to start</button>
+		<div class="banner" v-if="bannerText">
+			<button @click.once="startGame">{{bannerText}}</button>
 		</div>
 		<div class="title">
 			<h1>—— Vue Tetris ——</h1>
 		</div>
 		<div class="play-and-info-container">
-			<Playground ref="playground" @landing="nextBrick" :newBrickType="newBrickType"/>
-			<GameInfo/>
+			<Playground ref="playground" @landing="nextBrick" @gameOver="bannerText = 'Click to restart'" :gameSpeed="gameSpeed"/>
+			<GameInfo :score="score" :count="count" :level="Math.floor((1000 - gameSpeed) / 100)" />
 		</div>
 		<div class="controler-container">
 			<Controler @rotate="$refs.playground.rotate()" @fall="$refs.playground.fall()" @move="move" />
@@ -20,7 +20,6 @@
 	import Playground from './Playground'
 	import GameInfo from './GameInfo'
 	import Controler from './Controler'
-	import { randomType } from '../util/index.js' 
 	export default {
 		name: 'Game',
 		components: {
@@ -30,17 +29,25 @@
 		},
 		data () {
 			return {
-				newBrickType:'',
-				ifBanner: true
+				gameSpeed: 900,
+				bannerText: 'Click to start',
+				score: 0,
+				count: 0
 			}
 		},
 		methods: {
-			nextBrick () {
-				this.newBrickType = randomType()
+			nextBrick (count) {
+				this.count += count
+				this.gameSpeed -= count * 10
+				this.score += count * (count + 9)
+				this.$refs.playground.createBrick()
 			},
 			startGame () {
-				this.ifBanner = false
-				this.newBrickType = randomType()
+				if (this.bannerText === 'Click to restart') {
+					this.$refs.playground.restart()
+				}
+				this.bannerText = ''
+				this.$refs.playground.createBrick()
 			},
 			move (direction) {
 				this.$refs.playground.move(direction)

@@ -5,7 +5,7 @@
 			<table>
 				<tr>
 					<td></td>
-					<td><button class="cross" @click="$emit('rotate')"></button> </td>
+					<td><button class="cross" @click="$emit('rotate')" @touchstart="$emit('rotate')"></button> </td>
 					<td></td>
 				</tr>
 				<tr>
