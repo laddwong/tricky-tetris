@@ -33,9 +33,15 @@ export default {
         this.marginLeft = width * (1 - this.scale)
       }
       document.documentElement.addEventListener('touchend', function (e) {
-        e.preventDefault()
+        if (e.preventDefault) {
+          e.preventDefault()
+        }
         e.target.click()
-      })
+      }, true)
+      // 阻止双指放大
+      document.addEventListener('gesturestart', (event) => {
+        event.preventDefault();
+      });
     }
   }
 }
